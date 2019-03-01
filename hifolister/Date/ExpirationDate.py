@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """Class to represent an ExpirationDate."""
+import sys
 import time
 from . import Date
 
@@ -15,3 +16,5 @@ class ExpirationDate(Date.Date):
 def  _ThrowErrorDateEarlierThanNow(dateToCheck):
     if dateToCheck < int(time.time()):
         raise ValueError("Expiration date can only be in the future!")
+
+NoExpirationDate = ExpirationDate(sys.maxsize)
