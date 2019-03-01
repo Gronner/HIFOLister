@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """Tests for the ElementInformation class."""
 import sys
-sys.path.append(r'/home/felix/Documents/Projekte/HIFOLister/hifolister')
+import os.path
+sys.path.append(os.path.abspath('./hifolister'))
 from ListElements import ElementInformation
 
 class TestElementInformationConstructor:
