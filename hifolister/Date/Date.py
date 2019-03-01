@@ -7,7 +7,7 @@ class Date:
     def __init__(self, date):
         """Constructor for the Date class."""
         _ThrowErorrDateEarlierThanEpoch(date)
-        self._date = date
+        self.date = date
 
     @property
     def date(self):
@@ -17,6 +17,7 @@ class Date:
     def date(self, new_date):
         _ThrowErorrDateEarlierThanEpoch(new_date)
         self._date = new_date
+
 
 def _ThrowErorrDateEarlierThanEpoch(dateToCheck):
     """Throws an error if the dateToCheck is smaller than zero/earlier than the epoch."""

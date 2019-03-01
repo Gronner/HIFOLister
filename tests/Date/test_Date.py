@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Tests for the ListElement."""
+"""Tests for the Date class."""
 import sys
 import os.path
 import pytest
@@ -8,7 +8,7 @@ sys.path.append(os.path.abspath('./hifolister'))
 from Date import Date
 
 class TestDateConstructor:
-    """Tests for a dates constructor."""
+    """Tests for a Date's constructor."""
 
     def test_CreateDateAtEpoch(self):
         """Creates a new Date at Epoch."""
@@ -28,7 +28,7 @@ class TestDateConstructor:
 
     def test_CreateNonExistendDate(self):
         """Creates a new Date at a random non existend Date."""
-        testDate = random.randint((-sys.maxsize -1), 0)
+        testDate = random.randint((-sys.maxsize - 1), 0)
         
         with pytest.raises(ValueError):
             dateDisallowed = Date.Date(testDate)
