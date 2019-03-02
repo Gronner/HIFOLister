@@ -14,16 +14,16 @@ class FifoList:
     def __len__(self):
         return self._length
 
-    def insertElement(self, new_element):
+    def insertElement(self, newElement):
         """Inserts a new element at the end of the list."""
         if self.topElement is None:
-            self.topElement = new_element
+            self.topElement = newElement
         else:
             currentElement = self.topElement
             while(currentElement.nextElement):
                 currentElement = currentElement.nextElement
-            currentElement.nextElement = new_element
-            new_element.previousElement = currentElement
+            currentElement.nextElement = newElement
+            newElement.previousElement = currentElement
         self._length += 1
 
     def pop(self):
@@ -38,3 +38,21 @@ class FifoList:
 
         self._length -= 1
         return oldTopElement
+
+    def remove(self, targetElement):
+        """Removes the target element from the list and returns it."""
+        currentElement = self.topElement
+        while(currentElement):
+            if currentElement == targetElement:
+                if not currentElement.previousElement is None:
+                    currentElement.previousElement.nextElement = currentElement.nextElement
+                if not currentElement.nextElement is None:
+                    currentElement.nextElement.previousElement = currentElement.previousElement
+                self._length -= 1
+                return currentElement
+            currentElement = currentElement.nextElement
+        return ListElement.NoListElement
+
+    def update(self):
+        """Does nothing for a FIFO list."""
+        pass

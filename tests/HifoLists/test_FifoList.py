@@ -105,3 +105,49 @@ class TestPopTopListElement:
             removedElement = testFifoList.pop()
             assert len(testFifoList) == targetListSize - 2 - i
             assert removedElement is elementList[i]
+
+class TestRemoveElement:
+    """Tests to remove a given element from the list."""
+
+    def test_removeElementNotInList(self, listWithMoreThanOneElement, listElement):
+        """Test to remove one element that is not in the list."""
+        testFifoList, elementList, targetListSize = listWithMoreThanOneElement
+        assert len(testFifoList) == targetListSize - 1
+        removedElement = testFifoList.remove(listElement)
+        assert len(testFifoList) == targetListSize - 1
+        assert removedElement is ListElement.NoListElement
+
+    def test_removeFirstElementInList(self, listWithMoreThanOneElement):
+        testFifoList, elementList, targetListSize = listWithMoreThanOneElement
+        targetElementIndex = 0
+        assert len(testFifoList) == targetListSize - 1
+        removedElement = testFifoList.remove(elementList[targetElementIndex])
+        assert len(testFifoList) == targetListSize - 2
+        assert removedElement is elementList[targetElementIndex]
+
+    def test_removeLastElementInList(self, listWithMoreThanOneElement):
+        testFifoList, elementList, targetListSize = listWithMoreThanOneElement
+        targetElementIndex = -1
+        assert len(testFifoList) == targetListSize - 1
+        removedElement = testFifoList.remove(elementList[targetElementIndex])
+        assert len(testFifoList) == targetListSize - 2
+        assert removedElement is elementList[targetElementIndex]
+
+    def test_removeElementInList(self, listWithMoreThanOneElement):
+        testFifoList, elementList, targetListSize = listWithMoreThanOneElement
+        targetElementIndex = random.randint(0, targetListSize - 2)
+        assert len(testFifoList) == targetListSize - 1
+        removedElement = testFifoList.remove(elementList[targetElementIndex])
+        assert len(testFifoList) == targetListSize - 2
+        assert removedElement is elementList[targetElementIndex]
+
+class TestUpdateList:
+
+    def test_UpdatedFifoListUnchanged(self, listWithMoreThanOneElement):
+        testFifoList, elementList, targetListSize = listWithMoreThanOneElement
+        testFifoList.update()
+        assert len(testFifoList) == targetListSize - 1
+        currentElement = testFifoList.topElement
+        for element in elementList:
+            assert element is currentElement
+            currentElement = currentElement.nextElement
