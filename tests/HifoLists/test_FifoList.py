@@ -27,6 +27,21 @@ def elementInformation():
 def listElement(elementInformation):
     return ListElement.ListElement(elementInformation)
 
+@pytest.fixture
+def listWithOneElement(emptyList, listElement):
+    emptyList.insertElement(listElement)
+    return emptyList
+
+@pytest.fixture
+def listWithMoreThanOneElement(emptyList, elementInformation):
+    targetListSize = random.randint(3, 16)
+    elementList = []
+    for i in range(1, targetListSize):
+        new_element = ListElement.ListElement(elementInformation)
+        emptyList.insertElement(new_element)
+        elementList.append(new_element)
+    return emptyList, elementList, targetListSize
+
 
 class TestFifoListConstructor:
     """Tests for the FifoLists Constructor."""
@@ -49,21 +64,44 @@ class TestInsertListElement:
         assert len(emptyList) == 1
         assert emptyList.topElement is listElement
     
-    def test_InsertMoreThanOneElement(self, emptyList, elementInformation):
+    def test_InsertMoreThanOneElement(self, listWithMoreThanOneElement):
         """Inserts multiple (2 up to 15) elements into the list."""
-        targetListSize = random.randint(3, 16)
-        elementList = []
-        for i in range(1, targetListSize):
-            new_element = ListElement.ListElement(elementInformation)
-            emptyList.insertElement(new_element)
-            elementList.append(new_element)
+        testFifoList, elementList, targetListSize = listWithMoreThanOneElement
 
-        assert len(emptyList) == targetListSize - 1 # Off-by-one behaviour of Python's range()!
+        assert len(testFifoList) == targetListSize - 1 # Off-by-one behaviour of Python's range()!
 
-        checkElement = emptyList.topElement
+        checkElement = testFifoList.topElement
         assert checkElement.previousElement is None
         for i in range(1, targetListSize - 1):
             assert checkElement.nextElement is elementList[i]
             checkElement = checkElement.nextElement
 
         assert checkElement.nextElement is None
+
+class TestPopTopListElement:
+    """Tests to remove elements from the top of the list."""
+
+    def test_PopFromEmptyList(self, emptyList):
+        """Test to remove element from an empty list."""
+        assert len(emptyList) == 0
+        removedElement = emptyList.pop()
+        assert removedElement == ListElement.NoListElement
+        assert len(emptyList) == 0
+        assert emptyList.topElement is None
+
+    def test_PopFromListWithOneElement(self, listElement, listWithOneElement):
+        """Test to remove the only element from a list."""
+        assert len(listWithOneElement) == 1
+        removedElement = listWithOneElement.pop()
+        assert removedElement is listElement
+        assert len(listWithOneElement) == 0
+
+    def test_PopFromListWithMultipleElements(self, listWithMoreThanOneElement):
+        testFifoList, elementList, targetListSize = listWithMoreThanOneElement
+
+        assert len(testFifoList) == targetListSize - 1
+
+        for i in range(0, targetListSize - 1):
+            removedElement = testFifoList.pop()
+            assert len(testFifoList) == targetListSize - 2 - i
+            assert removedElement is elementList[i]
