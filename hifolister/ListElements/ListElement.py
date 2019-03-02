@@ -2,6 +2,7 @@
 """ListElements base implementation used for a simple FIFO list."""
 
 from Date import ExpirationDate
+from . import ElementInformation 
 
 class ListElement:
     """Base Class for list Elements"""
@@ -11,3 +12,5 @@ class ListElement:
         self.expirationDate = expirationDate
         self.nextElement = None
         self.previousElement = None
+
+NoListElement = ListElement(ElementInformation.ElementInformation('NoName', 'NoDescription'))
