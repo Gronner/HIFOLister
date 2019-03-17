@@ -20,7 +20,7 @@ def expirationDate():
     return ExpirationDate.ExpirationDate(int(time.time()))
 
 
-class TestListConstructor:
+class TestListElementConstructor:
     """Tests for a ListElement's constructor."""
 
     def test_createOneElementWithoutExpirationDate(self, elementInformation):
